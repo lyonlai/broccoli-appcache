@@ -10,9 +10,10 @@
   },
   "main": "index.js",
   "files": [
-    "tests",
+    "test",
     "index.js",
     "README.md",
+    "LICENSE",
     "package.json"
   ],
   "license" : "MIT",
