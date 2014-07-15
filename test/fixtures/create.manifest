@@ -1,0 +1,12 @@
+CACHE MANIFEST
+#version: 1
+#test
+CACHE
+/test/a.html
+/b/d.html
+NETWORK
+http://www.google.com/
+FALLBACK
+/fallback/c.html
+SETTINGS
+prefer-online

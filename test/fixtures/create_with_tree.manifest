@@ -1,0 +1,16 @@
+CACHE MANIFEST
+#version: 1
+#test
+CACHE
+index.html
+/assets/app.js
+/assets/logo.png
+/assets/style.css
+/test/a.html
+/b/d.html
+NETWORK
+http://www.google.com/
+FALLBACK
+/fallback/c.html
+SETTINGS
+prefer-online
