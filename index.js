@@ -10,7 +10,8 @@ var Writer = require('broccoli-writer'),
   uuid = require('uuid'),
   _ = require('lodash'),
   os = require('os'),
-  fs = require('fs');
+  fs = require('fs'),
+  mergeTrees = require('broccoli-merge-trees');
 
 AppCache.prototype = Object.create(Writer.prototype);
 AppCache.prototype.constructor = AppCache;
@@ -24,13 +25,13 @@ AppCache.defaultOptions = {
   manifestFileName: 'app'
 };
 
-function AppCache (inputTree, opts) {
+function AppCache (inputTrees, opts) {
   if (!(this instanceof AppCache)){
-    return new AppCache(inputTree, opts);
+    return new AppCache(inputTrees, opts);
   }
 
   this.options = _.merge(AppCache.defaultOptions, opts);
-  this.inputTree = inputTree;
+  this.inputTree = _.isArray(inputTrees) ? mergeTrees(inputTrees) : inputTrees;
 };
 
 AppCache.prototype.write = function (readTree, destDir) {
@@ -51,6 +52,7 @@ AppCache.prototype.write = function (readTree, destDir) {
           }
         }
       });
+
 
       deferred.resolve(cacheEntries);
     });
@@ -95,7 +97,7 @@ AppCache.prototype.composeAppCacheManifest = function(collectedCacheEntries){
     }
   });
 
-  return items.join(os.EOL);
+  return items.join("\n");
 };
 
 AppCache.sectionOrders = [ 'version', 'comment', 'cache', 'network', 'fallback', 'settings'];
