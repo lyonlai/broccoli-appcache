@@ -8,6 +8,13 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha"
   },
+  "main": "index.js",
+  "files": [
+    "tests",
+    "index.js",
+    "README.md",
+    "package.json"
+  ],
   "license" : "MIT",
   "dependencies": {
     "walk": "~2.3.3",
