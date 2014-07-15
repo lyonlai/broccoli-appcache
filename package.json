@@ -1,9 +1,14 @@
 {
   "name": "broccoli-appcache",
   "version": "0.1.0",
+  "author": {
+    "name": "Yun Lai",
+    "email": "lyonlai1984@gmail.com"
+  },
   "scripts": {
     "test": "./node_modules/.bin/mocha"
   },
+  "license" : "MIT",
   "dependencies": {
     "walk": "~2.3.3",
     "broccoli-writer": "~0.1.1",
