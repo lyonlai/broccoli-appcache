@@ -22,7 +22,8 @@ AppCache.defaultOptions = {
   settings: [], //entries for the settings section in the manifest file.
   version: uuid.v4, //function to generate the version.
   comment: '', //extra comment section will be located at right after the version section
-  manifestFileName: 'app'
+  manifestFileName: 'app', //name for the manifest file prefix. the suffix will be .manifest
+  treeCacheEntryPathPrefix: null //prefix that will be prepend to the entry items comes from the tree
 };
 
 function AppCache (inputTrees, opts) {
@@ -48,13 +49,12 @@ AppCache.prototype.write = function (readTree, destDir) {
         listeners: {
           file: function (root, fileStats, next) {
             if(fileStats.name.indexOf('.') !== 0) {
-              cacheEntries.push(path.join(root.replace(src, ''), fileStats.name));
+              cacheEntries.push(path.join(that.options.treeCacheEntryPathPrefix || '', path.join((root.replace(src, '')), fileStats.name))) ;
             }
             next();
           }
         }
       });
-
 
       deferred.resolve(cacheEntries);
     });

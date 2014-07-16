@@ -1,0 +1,16 @@
+CACHE MANIFEST
+#version: 1
+#test
+CACHE:
+/terminal/index.html
+/terminal/assets/app.js
+/terminal/assets/logo.png
+/terminal/assets/style.css
+/test/a.html
+/b/d.html
+NETWORK:
+http://www.google.com/
+FALLBACK:
+/fallback/c.html
+SETTINGS:
+prefer-online

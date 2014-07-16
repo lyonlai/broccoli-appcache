@@ -109,4 +109,31 @@ describe('broccoli-appcache', function(){
       builder.cleanup();
     });
   });
+
+  it('should be ok to prepend path on the tree items', function() {
+    var tree = appcache(select('./test/fixtures/test_trees'), {
+      cache: [ '/test/a.html', '/b/d.html'],
+      network: ['http://www.google.com/'],
+      fallback: ['/fallback/c.html'],
+      settings: ['prefer-online'],
+      comment: "test",
+      version: versioning,
+      treeCacheEntryPathPrefix: '/terminal'
+    });
+
+    version = 1;
+
+    var builder = new broccoli.Builder(tree);
+    return builder.build().then(function (dir) {
+      var content = fs.readFileSync(dir.directory + '/app.manifest', {encoding: 'utf8'}),
+        originalContent = fs.readFileSync(__dirname + '/fixtures/create_with_tree_cache_prefix.manifest', {encoding: 'utf8'}),
+        contentArr = content.split("\n"),
+        originalContentArray = originalContent.split("\n");
+
+      _.each(contentArr, function (line) {
+        expect(_.contains(originalContentArray, line)).to.be.true;
+      });
+      builder.cleanup();
+    });
+  });
 });

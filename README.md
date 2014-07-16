@@ -20,7 +20,8 @@ appcache can pickup the CACHE section from  it's first argument, which can be an
 		settings: [], //entries for the settings section in the manifest file.
 		version: uuid.v4, //function to generate the version.
 		comment: '', //extra comment section will be located at right after the version section
-		manifestFileName: 'app'
+		manifestFileName: 'app', //name for the manifest file prefix. the suffix will be .manifest
+    treeCacheEntryPathPrefix: null //prefix that will be prepend to the entry items comes from the tree
 	};
 	
 **cache**, **network**, **fallback**, & **settings** section allow you to add your own entries.
@@ -29,4 +30,4 @@ appcache can pickup the CACHE section from  it's first argument, which can be an
 
 **manifestFileName** will define the prefix of a manifest file name, for example. the default one will be app.manifest. The suffix is chosen because node-mime will know it is text/cache-manifest. When referring to the file, you can put  <html manifest="/app.manifest"> into your index.html.
 
-
+**treeCacheEntryPathPrefix** will prepend the items that comes into the input tree. this option is made for the situation that deployment directory structure is different from development. So if '/teminal' is given and one of the incoming item in tree is index.html it will becomes /terminal/index.html
