@@ -16,11 +16,6 @@ function versioning(){
 
 
 describe('broccoli-appcache', function(){
-  afterEach(function() {
-    if (builder) {
-      builder.cleanup();
-    }
-  });
 
   it('should be able to create appcache manifest file', function(){
     var tree = appcache(null, {
@@ -33,7 +28,7 @@ describe('broccoli-appcache', function(){
 
     version = 1;
 
-    builder = new broccoli.Builder(tree);
+    var builder = new broccoli.Builder(tree);
     return builder.build().then(function(dir) {
       var content = fs.readFileSync(dir.directory + '/app.manifest', {encoding: 'utf8'}),
           originalContent = fs.readFileSync(__dirname + '/fixtures/create.manifest', {encoding: 'utf8'}),
@@ -42,6 +37,7 @@ describe('broccoli-appcache', function(){
 
       _.each(contentArr, function(line) { expect(_.contains(originalContentArray, line)).to.be.true; })
 
+      builder.cleanup();
     });
   });
 
@@ -57,7 +53,7 @@ describe('broccoli-appcache', function(){
 
     version = 1;
 
-    builder = new broccoli.Builder(tree);
+    var builder = new broccoli.Builder(tree);
     return builder.build().then(function(dir) {
       var content = fs.readFileSync(dir.directory + '/app.manifest', {encoding: 'utf8'}),
           originalContent = fs.readFileSync(__dirname + '/fixtures/create_with_tree.manifest', {encoding: 'utf8'}),
@@ -65,6 +61,7 @@ describe('broccoli-appcache', function(){
           originalContentArray = originalContent.split("\n");
 
       _.each(contentArr, function(line) { expect(_.contains(originalContentArray, line)).to.be.true; })
+      builder.cleanup();
     });
   });
 
@@ -80,14 +77,36 @@ describe('broccoli-appcache', function(){
 
     version = 1;
 
-    builder = new broccoli.Builder(tree);
+    var builder = new broccoli.Builder(tree);
     return builder.build().then(function(dir) {
       var content = fs.readFileSync(dir.directory + '/app.manifest', {encoding: 'utf8'}),
           originalContent = fs.readFileSync(__dirname + '/fixtures/create_with_merge_tree.manifest', {encoding: 'utf8'}),
           contentArr = content.split("\n"),
           originalContentArray = originalContent.split("\n");
 
+      _.each(contentArr, function(line) { expect(_.contains(originalContentArray, line)).to.be.true; });
+      builder.cleanup();
+    });
+  });
+
+  it('should not render empty section when it is not available', function(){
+    var tree = appcache(null, {
+      cache: [ '/test/a.html', '/b/d.html'],
+      comment: "test2",
+      version: versioning
+    });
+
+    version = 1;
+
+    var builder = new broccoli.Builder(tree);
+    return builder.build().then(function(dir) {
+      var content = fs.readFileSync(dir.directory + '/app.manifest', {encoding: 'utf8'}),
+        originalContent = fs.readFileSync(__dirname + '/fixtures/create_no_empty_section.manifest', {encoding: 'utf8'}),
+        contentArr = content.split("\n"),
+        originalContentArray = originalContent.split("\n");
+
       _.each(contentArr, function(line) { expect(_.contains(originalContentArray, line)).to.be.true; })
+      builder.cleanup();
     });
   });
 });

@@ -1,0 +1,6 @@
+CACHE MANIFEST
+#version: 1
+#test2
+CACHE:
+/test/a.html
+/b/d.html

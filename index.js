@@ -30,7 +30,7 @@ function AppCache (inputTrees, opts) {
     return new AppCache(inputTrees, opts);
   }
 
-  this.options = _.merge(AppCache.defaultOptions, opts);
+  this.options = _.merge({}, AppCache.defaultOptions, opts);
   this.inputTree = _.isArray(inputTrees) ? mergeTrees(inputTrees) : inputTrees;
 };
 
@@ -89,14 +89,18 @@ AppCache.prototype.composeAppCacheManifest = function(collectedCacheEntries){
         }
         break;
       case 'cache':
-        items.push(section.toUpperCase() + ":");
-        _.each(caches, function(item) {items.push(item)});
+        if(_.isArray(caches) && caches.length > 0) {
+          items.push(section.toUpperCase() + ":");
+          _.each(caches, function(item) {items.push(item)});
+        }
         break;
       case 'network':
       case 'fallback':
       case 'settings':
-        items.push(section.toUpperCase() + ":");
-        _.each(options[section], function(item) {items.push(item)});
+        if(_.isArray(options[section]) && options[section].length > 0) {
+          items.push(section.toUpperCase() + ":");
+          _.each(options[section], function(item) {items.push(item)});
+        }
         break;
     }
   });
