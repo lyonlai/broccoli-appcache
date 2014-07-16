@@ -1,7 +1,7 @@
 CACHE MANIFEST
 #version: 1
 #test2
-CACHE
+CACHE:
 index.html
 main.html
 /css/new-style.css
@@ -10,9 +10,9 @@ main.html
 /assets/style.css
 /test/a.html
 /b/d.html
-NETWORK
+NETWORK:
 http://www.google.com/
-FALLBACK
+FALLBACK:
 /fallback/c.html
-SETTINGS
+SETTINGS:
 prefer-online

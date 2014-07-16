@@ -87,13 +87,13 @@ AppCache.prototype.composeAppCacheManifest = function(collectedCacheEntries){
         }
         break;
       case 'cache':
-        items.push(section.toUpperCase());
+        items.push(section.toUpperCase() + ":");
         _.each(caches, function(item) {items.push(item)});
         break;
       case 'network':
       case 'fallback':
       case 'settings':
-        items.push(section.toUpperCase());
+        items.push(section.toUpperCase() + ":");
         _.each(options[section], function(item) {items.push(item)});
         break;
     }
