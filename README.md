@@ -3,7 +3,7 @@ broccoli-appcache
 
 broccoli-appcache generates HTML5 application cache manifest file for broccoli.
 
-*** Usage *** 
+#### Usage 
 
 var appcache = require('broccoli-appcache');
 
@@ -11,7 +11,7 @@ return appcache([tree1, tree2], options);
 
 appcache can pickup the CACHE section from  it's first argument, which can be an array or a single broccoli tree. The array of trees will be merge inside using broccoli-merge-trees. 
 
-*** Opitons ***
+#### Opitons
 
 	{
   		cache: [], //additional entries in cache section in the manifest file.
@@ -23,10 +23,10 @@ appcache can pickup the CACHE section from  it's first argument, which can be an
 		manifestFileName: 'app'
 	};
 	
-cache, networ, fallback, & settings section allow you to add your own entreis.
+**cache**, **network**, **fallback**, & **settings** section allow you to add your own entries.
 
-version is the function that will generate a new version number on the next broccoli build.
+**version** is a function that will generate a new version number on the next broccoli build.
 
-manifestFileName will define the prefix of a manifest file name, for example. the default one will be app.manifest. The suffix is chosen because node-mime will know it is text/cache-manifest. When referring to the file, you can put  <html manifest="/app.manifest"> into your index.html.
+**manifestFileName** will define the prefix of a manifest file name, for example. the default one will be app.manifest. The suffix is chosen because node-mime will know it is text/cache-manifest. When referring to the file, you can put  <html manifest="/app.manifest"> into your index.html.
 
 
