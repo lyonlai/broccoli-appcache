@@ -81,9 +81,11 @@ AppCache.prototype.composeAppCacheManifest = function(collectedCacheEntries){
         items.push('#version: ' + (_.isFunction(options.version) ? (options.version)() : uuid.v4()));
         break;
       case 'comment':
-        var lines = options.comment.split("\n");
-        _.each(lines, function(line) { items.push('#' + line.trim()); });
-        break;
+        if(!_.isEmpty(options.comment)){
+          var lines = options.comment.split("\n");
+          _.each(lines, function(line) { items.push('#' + line.trim()); });
+          break;
+        }
       case 'cache':
         items.push(section.toUpperCase());
         _.each(caches, function(item) {items.push(item)});
