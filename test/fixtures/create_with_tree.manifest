@@ -2,7 +2,7 @@ CACHE MANIFEST
 #version: 1
 #test
 CACHE:
-index.html
+/index.html
 /assets/app.js
 /assets/logo.png
 /assets/style.css

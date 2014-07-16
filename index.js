@@ -35,7 +35,7 @@ function AppCache (inputTrees, opts) {
 };
 
 AppCache.joinURI = function(left, right) {
-  return (!_.isEmpty(left) && !_.isEmpty(right)) ? [left, right].join('/').replace('//', '/') : ( _isEmpty(left) ? right : left );
+  return (!_.isEmpty(left) && !_.isEmpty(right)) ? [left, right].join('/').replace(/[/]{2,}/, '/') : ( _.isEmpty(left) ? right : left );
 };
 AppCache.prototype.write = function (readTree, destDir) {
 
@@ -50,7 +50,7 @@ AppCache.prototype.write = function (readTree, destDir) {
       walk.walkSync(src, {
         listeners: {
           file: function (root, fileStats, next) {
-            if(fileStats.name.indexOf('.') !== 0) {
+            if(fileStats.name[0] !== '.') {
               cacheEntries.push(AppCache.joinURI(that.options.treeCacheEntryPathPrefix || '', AppCache.joinURI((root.replace(src, '') || '/'), fileStats.name))) ;
             }
             next();
