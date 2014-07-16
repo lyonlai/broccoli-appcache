@@ -28,7 +28,6 @@ describe('broccoli-appcache', function(){
       network: ['http://www.google.com/'],
       fallback: ['/fallback/c.html'],
       settings: ['prefer-online'],
-      comment: "test",
       version: versioning
     });
 
@@ -39,30 +38,7 @@ describe('broccoli-appcache', function(){
       var content = fs.readFileSync(dir.directory + '/app.manifest', {encoding: 'utf8'}),
           originalContent = fs.readFileSync(__dirname + '/fixtures/create.manifest', {encoding: 'utf8'}),
           contentArr = content.split("\n"),
-          originalContentArray = content.split("\n");
-
-      _.each(contentArr, function(line) { expect(_.contains(originalContentArray, line)).to.be.true; })
-
-    });
-  });
-
-  it('should be able to create appcache manifest file with empty comment', function(){
-    var tree = appcache(null, {
-      cache: [ '/test/a.html', '/b/d.html'],
-      network: ['http://www.google.com/'],
-      fallback: ['/fallback/c.html'],
-      settings: ['prefer-online'],
-      version: versioning
-    });
-
-    version = 1;
-
-    builder = new broccoli.Builder(tree);
-    return builder.build().then(function(dir) {
-      var content = fs.readFileSync(dir.directory + '/app.manifest', {encoding: 'utf8'}),
-        originalContent = fs.readFileSync(__dirname + '/fixtures/create.empty_comment.manifest', {encoding: 'utf8'}),
-        contentArr = content.split("\n"),
-        originalContentArray = content.split("\n");
+          originalContentArray = originalContent.split("\n");
 
       _.each(contentArr, function(line) { expect(_.contains(originalContentArray, line)).to.be.true; })
 
@@ -86,19 +62,19 @@ describe('broccoli-appcache', function(){
       var content = fs.readFileSync(dir.directory + '/app.manifest', {encoding: 'utf8'}),
           originalContent = fs.readFileSync(__dirname + '/fixtures/create_with_tree.manifest', {encoding: 'utf8'}),
           contentArr = content.split("\n"),
-          originalContentArray = content.split("\n");
+          originalContentArray = originalContent.split("\n");
 
       _.each(contentArr, function(line) { expect(_.contains(originalContentArray, line)).to.be.true; })
     });
   });
 
-  it('should be able to create appcache manifest file within the tree', function(){
+  it('should be able to create appcache manifest file within the merge tree', function(){
     var tree = appcache([select('./test/fixtures/test_trees'), select('./test/fixtures/trees_to_merge')], {
       cache: [ '/test/a.html', '/b/d.html'],
       network: ['http://www.google.com/'],
       fallback: ['/fallback/c.html'],
       settings: ['prefer-online'],
-      comment: "test",
+      comment: "test2",
       version: versioning
     });
 
@@ -109,7 +85,7 @@ describe('broccoli-appcache', function(){
       var content = fs.readFileSync(dir.directory + '/app.manifest', {encoding: 'utf8'}),
           originalContent = fs.readFileSync(__dirname + '/fixtures/create_with_merge_tree.manifest', {encoding: 'utf8'}),
           contentArr = content.split("\n"),
-          originalContentArray = content.split("\n");
+          originalContentArray = originalContent.split("\n");
 
       _.each(contentArr, function(line) { expect(_.contains(originalContentArray, line)).to.be.true; })
     });
