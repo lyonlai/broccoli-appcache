@@ -47,7 +47,9 @@ AppCache.prototype.write = function (readTree, destDir) {
       walk.walkSync(src, {
         listeners: {
           file: function (root, fileStats, next) {
-            cacheEntries.push(path.join(root.replace(src, ''), fileStats.name));
+            if(fileStats.name.indexOf('.') !== 0) {
+              cacheEntries.push(path.join(root.replace(src, ''), fileStats.name));
+            }
             next();
           }
         }
