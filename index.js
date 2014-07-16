@@ -7,6 +7,7 @@ var Writer = require('broccoli-writer'),
   walk = require('walk'),
   RSVP = require('rsvp'),
   uuid = require('uuid'),
+  path = require('path'),
   _ = require('lodash'),
   fs = require('fs'),
   mergeTrees = require('broccoli-merge-trees');
@@ -50,7 +51,7 @@ AppCache.prototype.write = function (readTree, destDir) {
         listeners: {
           file: function (root, fileStats, next) {
             if(fileStats.name.indexOf('.') !== 0) {
-              cacheEntries.push(AppCache.joinURI(that.options.treeCacheEntryPathPrefix || '', AppCache.joinURI((root.replace(src, '')), fileStats.name))) ;
+              cacheEntries.push(AppCache.joinURI(that.options.treeCacheEntryPathPrefix || '', AppCache.joinURI((root.replace(src, '') || '/'), fileStats.name))) ;
             }
             next();
           }
@@ -65,7 +66,7 @@ AppCache.prototype.write = function (readTree, destDir) {
 
   return promise.then(function(cacheEntries) {
     var manifestContent = that.composeAppCacheManifest(cacheEntries);
-        manifestFileName = AppCache.joinURI(destDir, that.options.manifestFileName || 'app') + ".manifest";
+        manifestFileName = path.join(destDir, that.options.manifestFileName || 'app') + ".manifest";
 
     return fs.writeFileSync(manifestFileName, manifestContent, { encoding: 'utf8' });
   });
